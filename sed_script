@@ -1,0 +1,13 @@
+/^CREATE/ s/`\(.*\)`/[mors.\1]/
+s/unsigned//g
+s/^`/[/
+s/ `/ [/g
+s/` /] /g
+s/(`/([/g
+s/`)/])/g
+s/auto_increment/IDENTITY/
+s/text collate.*,$/text,/
+s/ENGINE.*$//
+/^KEY/ d
+s/^\(PRIMARY KEY.*\),$/\1/
+s/int([0-9]*)/int/g

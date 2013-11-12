@@ -1,0 +1,65 @@
+Sample output for remittance processing...
+
+Starting directory is: c:/XYZ/accounting
+["c:/XYZ/2012_01_09 Ebilling",
+ "c:/XYZ/2012_02_07 Ebilling",
+ "c:/XYZ/2012_03_07 Ebilling",
+ "c:/XYZ/2012_04_06 Ebilling",
+ "c:/XYZ/2012_05_07 Ebilling",
+ "c:/XYZ/2012_06_07 Ebilling",
+ "c:/XYZ/2012_07_09 Ebilling",
+ "c:/XYZ/2012_08_07 Ebilling",
+ "c:/XYZ/2012_09_10 Ebilling",
+ "c:/XYZ/2012_10_05 Ebilling",
+ "c:/XYZ/2012_11_07 Ebilling",
+ "c:/XYZ/2012_12_07 Ebilling"]
+Files for 2012/01
+["c:/XYZ/2012_01_09 Ebilling/Rem_2011_10_dummy.xls",
+ "c:/XYZ/2012_01_09 Ebilling/Rem_2011_10_dummyA.xls",
+ "c:/XYZ/2012_01_09 Ebilling/Rem_2011_11_dummy.xls",
+ "c:/XYZ/2012_01_09 Ebilling/Rem_2011_11_dummyA.xls",
+ "c:/XYZ/2012_01_09 Ebilling/Rem_2011_11_dummyB.xls",
+ "c:/XYZ/2012_01_09 Ebilling/Rem_2011_12_dummy.xls",
+ "c:/XYZ/2012_01_09 Ebilling/Rem_2011_12_dummyA.xls",
+ "c:/XYZ/2012_01_09 Ebilling/Rem_2011_12_dummyB.xls"]
+Rem_2011_10_dummy.xls
+Processing invoice# dummy for EBill date 2012/01
+Records....................      14
+Hours......................     313.25
+Amount.....................    5980.72
+Rem_2011_10_dummyA.xls
+Processing invoice# dummyA for EBill date 2012/01
+Records....................       2
+Hours......................      33.25
+Amount.....................     617.12
+Rem_2011_11_dummy.xls
+Processing invoice# dummy for EBill date 2012/01
+Records....................     281
+Hours......................    6777.08
+Amount.....................   99348.04
+Rem_2011_11_dummyA.xls
+Processing invoice# dummyA for EBill date 2012/01
+Records....................      15
+Hours......................     409.75
+Amount.....................    7595.88
+Rem_2011_11_dummyB.xls
+Processing invoice# dummyB for EBill date 2012/01
+Records....................       2
+Hours......................      50.50
+Amount.....................     937.28
+Rem_2011_12_dummy.xls
+Processing invoice# dummy for EBill date 2012/01
+Records....................    1709
+Hours......................    5989.55
+Amount.....................   95978.01
+Rem_2011_12_dummyA.xls
+Processing invoice# dummyA for EBill date 2012/01
+Records....................       4
+Hours......................     134.75
+Amount.....................    2477.16
+Rem_2011_12_dummyB.xls
+Processing invoice# dummyB for EBill date 2012/01
+Records....................       1
+Hours......................      16.00
+Amount.....................     385.92
+Finished processing files for c:/XYZ/2012_01_09 Ebilling

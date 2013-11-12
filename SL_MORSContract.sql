@@ -1,0 +1,5 @@
+SELECT [id] ,[customer_id] ,[date_of_contract] ,[pos_authorization_number] ,[client_id] ,[case_manager_name] ,[case_manager_id]
+,[contract_period] ,[employee_type] ,[service_type] ,[start_date] ,[end_date] ,[budget_code] ,[account_code]
+,[number_of_months] ,[dos_code] ,[dos_subcode] ,[authorized_units] ,[unit_rate] ,[unit_cost] ,[contingent_months]
+,[date_created] ,[date_updated] ,[created_by_user_id] ,[updated_by_user_id]
+  FROM [XYZBTRS_SQL].[dbo].[mors_contract]

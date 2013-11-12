@@ -1,0 +1,26 @@
+createmors Developer README
+===========================
+
+To recreate the export database for Care/Track (previous called MORS):
+
+1. Restore a clean copy of the database from the XYZ daily backups.
+  >> This is a standard MSSQL restore task
+2. Copy over any new remittance files from Manos. currently in:
+      //XYZ-Server/c:/Accounting/RC Ebill -- Invoice & Remittances
+3. Run the commands:
+      restart_sqlserver.cmd
+      createmors_sqlsharp.com
+  This makes sure have a clean database and that SQLSharp plugin is loaded
+  NOTE!!! the sqlsharp procedure also copies the 'main' source tables 
+          (tblAssignments, tblPOSContracts, tblPOHrs, tblVisits) from the
+          newly-restored database into <xxx>_copy tables. This allows us
+          to reset the main input without having to restore the databse (which
+          takes quite a long time).
+  >> A better(?) way to do this is to just copy the *.ldf/*.mdf files (located
+      in c:/mssql/data) and copy them back when needed.
+
+4. Run the createmors.cmd file... this should automagically run everything.  
+  >> This must be run in a DOS window!
+      createmors.cmd 
+  >> All output from subordinate commands are redirected to creatmors.out
+      so that we can review all the results.

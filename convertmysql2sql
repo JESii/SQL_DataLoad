@@ -1,0 +1,7 @@
+sed -f sed_script client.mysql > client.sql
+sed -f sed_script contract.mysql > contract.sql
+sed -f sed_script contract_job.mysql > contract_job.sql
+sed -f sed_script employee.mysql > employee.sql
+sed -f sed_script employee_assignment.mysql > employee_assignment.sql
+sed -f sed_script time_entry.mysql > time_entry.sql
+sed -f sed_script time_header.mysql > time_header.sql

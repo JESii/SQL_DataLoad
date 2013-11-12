@@ -1,0 +1,28 @@
+CREATE TABLE `employee` (
+`id` int(11) NOT NULL auto_increment,
+`status` smallint(6) NOT NULL default '0',
+`employee_number` varchar(20) default NULL,
+`title` varchar(50) default NULL,
+`first_name` varchar(30) default NULL,
+`last_name` varchar(30) default NULL,
+`company` varchar(50) default NULL,
+`email_address` varchar(128) default NULL,
+`address` varchar(50) default NULL,
+`address2` varchar(50) default NULL,
+`city` varchar(30) default NULL,
+`state` varchar(50) default NULL,
+`zip` varchar(20) default NULL,
+`country` varchar(2) default NULL,
+`day_phone` varchar(20) default NULL,
+`home_phone` varchar(20) default NULL,
+`fax` varchar(20) default NULL,
+`notes` text,
+`date_created` datetime default NULL,
+`date_updated` datetime default NULL,
+`created_by_user_id` int(11) default NULL,
+`updated_by_user_id` int(11) default NULL,
+PRIMARY KEY  (`id`),
+KEY `status` (`status`),
+KEY `index_first_and_last_name` (`first_name`,`last_name`,`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC
+

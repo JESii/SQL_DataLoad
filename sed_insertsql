@@ -1,0 +1,7 @@
+#/^CREATE/ s/^.*\(\[mors\.\w*\]\).*$/INSERT INTO \1 SELECT/ 
+#1 s/^.*\(\[[^]]*\]\).*$/INSERT \1 FROM (SELECT/ 
+/CREATE/ {
+  s/^.*\(\[[^]]*\]\).*$/INSERT \1 FROM (SELECT/ 
+  p }
+/^[^[]/ d
+s/^\(\[\w*\]\).*$/\t, AS \1/

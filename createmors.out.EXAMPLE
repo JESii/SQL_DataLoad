@@ -1,0 +1,337 @@
+=======> Beginning part 1 of the CREATEMORS process
+=======> Servername = "\SQLEXPRESS"
+Changed database context to 'XYZBTRS_SQL'.
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 1
+Cannot drop the procedure 'dbo.sp_Generic_frm_Dynamic_SQL_Export', because it does not exist or you do not have permission.
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 1
+Cannot drop the function 'dbo.fn_split_names', because it does not exist or you do not have permission.
+Changed database context to 'XYZBTRS_SQL'.
+Configuration option 'show advanced options' changed from 1 to 1. Run the RECONFIGURE statement to install.
+Configuration option 'xp_cmdshell' changed from 1 to 1. Run the RECONFIGURE statement to install.
+=======> Applying cleanup_tables
+Changed database context to 'XYZBTRS_SQL'.
+==> NOTE: Some results may be zero if this procedure has already been run
+==> Removing empty rows from tblVisits
+
+(33 rows affected)
+==> 33 NULL rows deleted from tblVisits
+==> Removing empty rows from ttmpVisits_Rates
+==> 33 NULL rows deleted from ttmpVisits_Rates
+==> Removing double-quotes from names in tblVisits
+==> 21720 quoted applicant names updated in tblVisits
+==> Removing double-quotes from names in ttmpVisits_Rates
+==> 21720 quoted applicant names updated in ttmpVisits_Rates
+==> Removing double-quotes from names in tblClients
+==> 1 quoted client names updated in tblClients
+==> Updating NULL POS Numbers in tblVisits from tblPOSContracts
+==> 3086 NULL POS Numbers updated in tblClients
+==> 184 remaining tblVisits records with NULL POS Number
+==> Updating NULL POS Numbers in ttmpVisits_Rates from tblPOSContracts
+==> 3086 NULL POS Numbers updated in ttmpVisits_Rates
+==> 184 remaining ttmpVisits_Rates records with NULL POS Number
+=======> Applying apply_assignments_fixup
+Changed database context to 'XYZBTRS_SQL'.
+
+(235225 rows affected)
+==> 235225 tblAssignments updates from XYZ_Assignments_Import
+=======> Applying pos_fixup data from JohnDoe1's s/sheet
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 20
+Cannot drop the table 'mors_fixup_pos_numbers', because it does not exist or you do not have permission.
+
+(170 rows affected)
+==> Created & inserted POS Fixup table
+Changed database context to 'XYZBTRS_SQL'.
+==> 170 rows in pos fixup table
+
+(46 rows affected)
+==> 46 POSContracts rows updated
+==> 19 POSHrs rows updated
+==> 45 fixup records not in POSHrs table
+=======> Applying JohnDoe2's jobid fixup data (see apply_job_id_fixup_data.out)
+=======> NOTE1: Use allotted hours from "2+ clients" worksheet
+=======> NOTE2: Update client name when merging jobs.
+=======> Applying Job2POS Fixup Changes
+Changed database context to 'XYZBTRS_SQL'.
+
+(347488 rows affected)
+Warning: Null value is eliminated by an aggregate or other SET operation.
+==> (WRONG!!!) 131116 JobIDs with multiple POS Numbers
+==> 5206 Visits updated
+==> 1002 Assignments updated
+==> 52 POSContracts updated
+==> 43 POSHrs updated
+Changed database context to 'XYZBTRS_SQL'.
+output                                                                                                                                                                                                                                                         
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NULL                                                                                                                                                                                                                                                           
+
+(0 rows affected)
+bcp XYZBTRS_SQL.dbo.tblClients out C:\XYZ\DataLoad\export_clients.txt -fc:\XYZ\DataLoad\export_clients.fmt  -c -SEDP23\SQLEXPRESS -T
+output                                                                                                                                                                                                                                                         
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Warning: -c overrides -f.                                                                                                                                                                                                                                      
+NULL                                                                                                                                                                                                                                                           
+Starting copy...                                                                                                                                                                                                                                               
+1000 rows successfully bulk-copied to host-file. Total received: 1000                                                                                                                                                                                          
+NULL                                                                                                                                                                                                                                                           
+1978 rows copied.                                                                                                                                                                                                                                              
+Network packet size (bytes): 4096                                                                                                                                                                                                                              
+Clock Time (ms.) Total     : 47     Average : (42085.11 rows per sec.)                                                                                                                                                                                         
+NULL                                                                                                                                                                                                                                                           
+
+(9 rows affected)
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 12
+Cannot drop the table 'mors_client_xref', because it does not exist or you do not have permission.
+==> Created client xref table
+Changed database context to 'XYZBTRS_SQL'.
+
+(1978 rows affected)
+=======> Creating primary views
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 18
+Cannot drop the view 'dbo.vw_btrs_contracts', because it does not exist or you do not have permission.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 2
+Cannot drop the view 'dbo.vw_btrs_contracts_duplicates', because it does not exist or you do not have permission.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 2
+Cannot drop the view 'dbo.vw_btrs_contracts_uniques', because it does not exist or you do not have permission.
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 16
+Cannot drop the view 'dbo.vw_btrs_jobs', because it does not exist or you do not have permission.
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 2
+Cannot drop the view 'dbo.vw_btrs_workers', because it does not exist or you do not have permission.
+=======> Creating client tables
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 17
+Cannot drop the table 'mors_client', because it does not exist or you do not have permission.
+==> Created client table
+Changed database context to 'XYZBTRS_SQL'.
+
+(0 rows affected)
+==> 1978 rows inserted into [mors_client]
+==> 1978 rows in tblClients
+=======> Creating contract tables
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 15
+Cannot drop the table 'mors_job_rates', because it does not exist or you do not have permission.
+==> Created job_rates table
+Changed database context to 'XYZBTRS_SQL'.
+
+(0 rows affected)
+Duplicate key was ignored.
+==> 16871 rows inserted into mors_job_rates table
+==> 17968 candidate JobID rows in tblAssignments
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 14
+Cannot drop the table 'mors_contract', because it does not exist or you do not have permission.
+==> Created contract table
+Changed database context to 'XYZBTRS_SQL'.
+
+(0 rows affected)
+Warning: Null value is eliminated by an aggregate or other SET operation.
+==> 5146 rows inserted into [mors_contract]
+==> 5183 unique POS numbers in tblPOSContracts
+==> 3756 unit_rate / unit_cost values updated
+    0 rows with NULL values remaining.
+==> WARNING! The counts above do not match up for some reason!!!
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 15
+Cannot drop the table 'mors_contract_job', because it does not exist or you do not have permission.
+==> Created contract_job table
+Changed database context to 'XYZBTRS_SQL'.
+
+(0 rows affected)
+==> 28003 rows inserted into [mors_contract_job]
+==> 28680 rows in tblPOSContracts table
+==> 10202 contract_job records with missing authorized units
+==> 53 contract_job records with missing Start/End dates
+Changed database context to 'XYZBTRS_SQL'.
+
+(5140 rows affected)
+=======> Creating employee tables
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 20
+Cannot drop the table 'mors_employee', because it does not exist or you do not have permission.
+==> Created employee table
+Changed database context to 'XYZBTRS_SQL'.
+
+(0 rows affected)
+==> 1583 rows inserted into [mors_employee]
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 17
+Cannot drop the table 'mors_employee_xref', because it does not exist or you do not have permission.
+==> Created employee_xref table
+Changed database context to 'XYZBTRS_SQL'.
+
+(0 rows affected)
+==> 1583 rows inserted into [mors_employee_xref]
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 15
+Cannot drop the table 'mors_employee_assignment', because it does not exist or you do not have permission.
+==> Created employee_assignment table...
+Changed database context to 'XYZBTRS_SQL'.
+
+(175191 rows affected)
+==> 175191 rows inserted into [mors_employee_assignments]
+==> 235178 rows in tblAssignments table
+=======> Creating timesheet views
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 2
+Cannot drop the view 'dbo.vw_btrs_timesheets', because it does not exist or you do not have permission.
+=======> Creating timesheet tables
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 17
+Cannot drop the table 'mors_time_header', because it does not exist or you do not have permission.
+==> Created time_header table
+Changed database context to 'XYZBTRS_SQL'.
+
+(0 rows affected)
+==> 24548 rows inserted into [mors_time_header]
+==> 25463 candidate rows in tblVisits
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 2
+Cannot drop the view 'dbo.vw_btrs_timesheet_lines', because it does not exist or you do not have permission.
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 17
+Cannot drop the table 'mors_time_entry', because it does not exist or you do not have permission.
+==> Created time_entry table
+Changed database context to 'XYZBTRS_SQL'.
+
+(126471 rows affected)
+==> 126471 rows inserted into [mors_time_entry]
+==> 127612 candidate rows in tblVisits
+=======> Testing views
+Changed database context to 'XYZBTRS_SQL'.
+
+==> Testing POS contract tables/counts
+Warning: Null value is eliminated by an aggregate or other SET operation.
+==> unique btrs_contracts: 5146
+    mors_contracts:        5146
+    ALL btrs_contracts:    5220
+
+==> Testing job info; all three counts must be the same
+==> vw_btrs_jobs: 28802
+    job# vs pos#: 28802
+    job# vs Cln#: 28802
+
+==> Testing employee/worker info; all three counts must be the same
+==> Count 1: 1583
+    Count 2: 1583
+    Count 3: 1583
+
+==> Testing timesheet data
+==> vw_btrs_timesheets: 24548
+    mors_time_header:   24548
+
+
+==> Testing timesheet/lines counts
+==> vw_btrs_timesheet_lines:    126471
+    tblVisits (Candidates):       129267
+       (i.e., PO# NOT NULL, JOB# NOT NULL, Pay_Hours <> 0.0) 
+    mors_time_entry:            126471
+    MTE duplicated Visit_IDs         0
+==> ERROR: Unmatched time_entry counts and/or MTE duplicated Visit_IDs !
+======> Parsing remittance files
+=======> Beginning part 2 of the CREATEMORS process
+=======> Servername = "\SQLEXPRESS"
+=======>Creating remittance files/tables
+Changed database context to 'XYZBTRS_SQL'.
+Msg 3701, Level 11, State 5, Server EDP23\SQLEXPRESS, Line 16
+Cannot drop the table 'mors_remittance', because it does not exist or you do not have permission.
+==> Created remittance table
+Changed database context to 'XYZBTRS_SQL'.
+
+(0 rows affected)
+==> Inserted 27218 rows in mors_remittance
+Changed database context to 'XYZBTRS_SQL'.
+
+(1978 rows affected)
+==> Cleared old UCI numbers from client table
+
+(1749 rows affected)
+==> Added UCI numbers to clients
+===> 229 clients have no UCI number
+=======> Exporting various test/validation files
+Changed database context to 'XYZBTRS_SQL'.
+output                                                                                                                                                                                                                                                         
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NULL                                                                                                                                                                                                                                                           
+Starting copy...                                                                                                                                                                                                                                               
+NULL                                                                                                                                                                                                                                                           
+11 rows copied.                                                                                                                                                                                                                                                
+Network packet size (bytes): 4096                                                                                                                                                                                                                              
+Clock Time (ms.) Total     : 78     Average : (141.03 rows per sec.)                                                                                                                                                                                           
+NULL                                                                                                                                                                                                                                                           
+
+(7 rows affected)
+output                                                                                                                                                                                                                                                         
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NULL                                                                                                                                                                                                                                                           
+Starting copy...                                                                                                                                                                                                                                               
+NULL                                                                                                                                                                                                                                                           
+6 rows copied.                                                                                                                                                                                                                                                 
+Network packet size (bytes): 4096                                                                                                                                                                                                                              
+Clock Time (ms.) Total     : 687    Average : (8.73 rows per sec.)                                                                                                                                                                                             
+NULL                                                                                                                                                                                                                                                           
+
+(7 rows affected)
+=======> Final statistics
+Changed database context to 'XYZBTRS_SQL'.
+
+(10399 rows affected)
+==> Summary statistics from Data Load
+ NOTE That we exclude assignments prior to 2011/10/01
+    POSContracts:                28680
+    POSContracts Exceptions:        74 (U/Staff => BTRS rejections)
+    POSContracts (POS Nbrs):      5220 (select DISTINCT PONumber from vw_btrs_contracts)
+    POSContracts (POS Nbrs):      5183 (select DISTINCT PONumber from tblPOSContracts)
+    POS Number Duplicates:          74 (select * from vw_btrs_contracts_duplicates)
+    MORS Contracts (MC):          5146
+    POSContracts (Job Nbrs):     28680 (select DISTINCT JobID from tblPOSContracts)
+    MORS Contract Jobs (MCJ):    28003
+    MCJ Missing AllottedHrs:     10202
+    MCJ Missing St/En Dates:        53
+  * POSNumbers vs. MC:             677 (Missing/Errors)
+  * POSJobs vs. MCJ:               677 (Missing/Errors)
+    POSHrs:                      18375
+    POSHrs Exceptions:             293 (U/Staff => BTRS rejections)
+    POSHrs (POS Nbrs):            4486 (select DISTINCT PONumber from tblPOSHrs)
+    POSHrs (Job Nbrs):           18375 (select DISTINCT JobID from tblPOSHrs)
+    POSHrs w/o Allot/Hrs:           73 (Missing/Errors)
+  * Jobs not in POSHrs:          10399
+  * Visits using those Jobs:     27445
+  * Unique Jobs in the Visits:    3565
+  * Visits with Pay_Hours=0:      1673 (Ignoring)
+    Visits (Work-Shifts):       131116
+    Visits_Rates:               131116
+    Candidate Visits:           129267 (Ignoring Pay_Hours = 0.0, NULL POS#, NULL Job#)
+    POS Duplicates Visits:        2021 (Visits relating to remaining "POS Duplicates")
+    MORS Time Headers (MTH):     24548
+    MORS Time Entries (MTE):    126471
+    MTE VisitID duplicates:          0 (Error)
+///////////////// Review these numbers /////////////////
+  * Visits vs. MTE:               2796 (Missing/Errors - Count)
+  * Orphan Visits:                2397 (Missing/Errors - Select)
+  * MTE with Pay_Hours=0:         1596 (Should not be in MTE)
+////////////////////////////////////////////////////////
+    Visits w/NULL POS Nbrs:        184
+    Assignments:                183072
+    Assignments Import:         183106
+    Assignments Exceptions:       1947 (U/Staff => BTRS rejections)
+    Clients:                      1978
+    Clients (Active/Assign):      1467
+    MORS Clients:                 1978
+  * Clients vs. MORS Clients:        0 (Missing/Errors)
+    Applicants (Act/Assign):      1583
+    MORS Employees (ME):          1583
+  * Applicants vs. ME:               0 (Missing/Errors)
+================================================
+***** REMINDER: Need hours/dollars summaries *****
+///////// Additions for JohnDoe2's s/sheet ///////////////////////////
+***** NOTE1: Use allotted hours from "2+ clients" worksheet *****
+***** NOTE2: Update client name when merging jobs *****
+/////////////////////////////////////////////////////////////////

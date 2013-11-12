@@ -1,0 +1,7 @@
+sed -f sed_insertsql client.sql > tmp_insert_client.sql
+sed -f sed_insertsql contract.sql > tmp_insert_contract.sql
+sed -f sed_insertsql contract_job.sql > tmp_insert_contract_job.sql
+sed -f sed_insertsql employee.sql > tmp_insert_employee.sql
+sed -f sed_insertsql employee_assignment.sql > tmp_insert_employee_assignment.sql
+sed -f sed_insertsql time_entry.sql > tmp_insert_time_entry.sql
+sed -f sed_insertsql time_header.sql > tmp_insert_time_header.sql
