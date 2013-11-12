@@ -22,6 +22,7 @@ The goal was to correct as many of these errors as possible and to clearly ident
 * Windows CMD scripts to drive the process
 * Ruby to process the external spreadsheets and perform other tasks such as generating SQL scripts fo data fixups from the spreadsheets
 * SQL scripts to perform the data conversion
+* Sed scripts to cleanup data and/or to quickly generate SQL code
 
 Along the way, a number of one-off tests were run to determine precisely how various programs handled specific error or unusual conditions. These simple test scripts are included in the event they help someone else.
 
@@ -38,29 +39,33 @@ recommended!
 Overall, the process was designed to be quite chatty and all output was redirected to various .out files for subsequent review. [Note that some of these files are provided; however, sever
 
 ##Process
-The overall sequence runs as follows:
+Overall, the process runs from a small number of Windows CMD scripts, designed to make it easy to run the process through to completion without user intervention. Once a short manual process is initiated, the entire script can run straight through. The CMD code that exists here does have a few prompts throughout the process, but they were easily removed to allow unattended operation.
 
 ###Manual
 * Restore the conversion database from the current production database
-* Run the CREATEMORS\_SQLSHARP.CMD to install the extension
+* Run the **createmors_sqlsharp.cmd** to install the extension
 
-###CREATEMORS.CMD
+###createmors.cmd
 * Ensure that the SQLSharp extension has been loaded
-* Run CREATEMORS1.CMD to perform the basic creation/conversion
+* Run **createmors1.cmd** to perform the basic creation/conversion
     * Run various data fixup procedures
     * Create some basic views and new client tables
     * Insert data into the tables
     * Test the various tables for accuracy / completeness
     * Start the invoice/payment (remittance) processing
-* Run CREATEMORS2.CMD to incorporate the invoice/payment data from external spreadsheets and produce final statistics
+* Run **createmors2.cmd** to incorporate the invoice/payment data from external spreadsheets and produce final statistics
    * Process the remittance data and update output tables with data acquired from this step
    * Export data for missing information
    * Print summary statistics & error information
 
-At several points throughout the process, ruby scripts were created to process data in the Excel spreadsheets and perform various conversion tasks.
+###createmors_list.cmd
+This is a convenience command to display the results, sans irrelevant output from MS SQL Server. This is a simple grep with options to exclude the constant "Changed database" and other "informational" messages from SQL Server that clutter up the output.
 
 ##Results
 Output from the various steps was redirected to a variety of .out files, so that the intermediate results could be examined and changes made. 
 Numerous errors were tracked throughout the process and matched back to external information about the database contents. In the end,
 not all errors could be handled: aproximately 1.5% of the data could not be matched, due to poor data quality in the original database,
 and had to be handled through an external, manual process.
+
+##NOTE
+The original process ran with all scripts in the project's root directory; however, the ruby and SQL scripts have been extracted into their own sub-directories for easier reviewing.
