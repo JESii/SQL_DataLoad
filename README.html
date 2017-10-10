@@ -1,93 +1,87 @@
-<h1>SQL DataLoad Project</h1>
+<h1 id="sql-dataload-project">SQL DataLoad Project</h1>
 
 <p>This project is an ETL (Extract-Transform-Load) project to convert a live database to a new system.</p>
 
-<p>It took as input: </p>
+<p>It took as input:</p>
 
 <ul>
-<li>an existing MS SQL Server Database representing the live system; </li>
-<li>several production Excel files containing accounting information (i.e., invoicing and payments). The conversion process covered over a year of live operation, so the historical files, contained in a nested directory structure, had to be found, parsed, and processed for the information they contained; </li>
-<li>a number of special Excel 'fixup' files (created to deal with bad data in the SQL Server tables; these were parsed by ruby scripts which converted the detailed information into a SQL script to apply the corrections to the live database before the actual conversion process).
+  <li>an existing MS SQL Server Database representing the live system;</li>
+  <li>several production Excel files containing accounting information (i.e., invoicing and payments). The conversion process covered over a year of live operation, so the historical files, contained in a nested directory structure, had to be found, parsed, and processed for the information they contained;</li>
+  <li>a number of special Excel ‘fixup’ files (created to deal with bad data in the SQL Server tables; these were parsed by ruby scripts which converted the detailed information into a SQL script to apply the corrections to the live database before the actual conversion process).
 and created the new database, properly defined and related.</li>
 </ul>
 
 <p>Some of the issues that had to be dealt with included:</p>
 
 <ul>
-<li>Multiple individuals assigned the same ids in the original database; thus, James Smith and Jesse James could all have the ID 12345</li>
-<li>Ids and names were changed at various times without correcting the existing data</li>
-<li>The only reference between the tables and the external spreadsheets was individual's names, which had many mis-spellings and typos. I.e., one part of the system might use the name 'James Smith', whereas external systems might refer to that individual using the name 'James S Smith', 'James S. Smith', 'James Smith Jr.', etc...  This required special processing to 'normalize' the names and improve the percentage matched.</li>
-<li>During the original creation of the live system, not all records could be captured (data errors, typos, missing data,...) and thus it was incomplete. However, other instances of that data did appear in several external, related systems.</li>
+  <li>Multiple individuals assigned the same ids in the original database; thus, James Smith and Jesse James could all have the ID 12345</li>
+  <li>Ids and names were changed at various times without correcting the existing data</li>
+  <li>The only reference between the tables and the external spreadsheets was individual’s names, which had many mis-spellings and typos. I.e., one part of the system might use the name ‘James Smith’, whereas external systems might refer to that individual using the name ‘James S Smith’, ‘James S. Smith’, ‘James Smith Jr.’, etc…  This required special processing to ‘normalize’ the names and improve the percentage matched.</li>
+  <li>During the original creation of the live system, not all records could be captured (data errors, typos, missing data,…) and thus it was incomplete. However, other instances of that data did appear in several external, related systems.</li>
 </ul>
 
 <p>The goal was to correct as many of these errors as possible and to clearly identify any missing data.</p>
 
-<h2>Languages Used</h2>
-
+<h2 id="languages-used">Languages Used</h2>
 <ul>
-<li>Windows CMD scripts to drive the process</li>
-<li>Ruby to process the external spreadsheets and perform other tasks such as generating SQL scripts fo data fixups from the spreadsheets</li>
-<li>SQL scripts to perform the data conversion</li>
-<li>Sed scripts to cleanup data and/or to quickly generate SQL code</li>
+  <li>Windows CMD scripts to drive the process</li>
+  <li>Ruby to process the external spreadsheets and perform other tasks such as generating SQL scripts fo data fixups from the spreadsheets</li>
+  <li>SQL scripts to perform the data conversion</li>
+  <li>Sed scripts to cleanup data and/or to quickly generate SQL code</li>
 </ul>
 
 <p>Along the way, a number of one-off tests were run to determine precisely how various programs handled specific error or unusual conditions. These simple test scripts are included in the event they help someone else.</p>
 
-<h2>Design Approach</h2>
-
+<h2 id="design-approach">Design Approach</h2>
 <p>The entire process was designed so that the conversion could be re-run as many times as necessary against a clean/updated database.
-This is in contrast to the approach followed in some other conversions where data is converted once to spreadsheets in a 'standard' format
+This is in contrast to the approach followed in some other conversions where data is converted once to spreadsheets in a ‘standard’ format
 and then changes to the original database are processed manually. The output database structure was originally provided as MySQL statements,
 so these were converted to MS SQL Server format (via a ruby script) as part of the initial handiling. Since this was run in a Windows environment, the process was
 executed through a series of CMD files to drive the process. A single CMD file - createmors.cmd - drives the entire process. At a few points
 in the process, the SQL Server database instance is restarted; this was done to avoid problems wherein MS SQL Server would hang for no 
 apparent reason. Also notice that the free version of the SQLSharp extension was used: this is an awesome library for MS SQL Server users - highly
-recommended! </p>
+recommended!</p>
 
 <p>Overall, the process was designed to be quite chatty and all output was redirected to various .out files for subsequent review. [Note that some of these files are provided; however, sever</p>
 
-<h2>Process</h2>
-
+<h2 id="process">Process</h2>
 <p>Overall, the process runs from a small number of Windows CMD scripts, designed to make it easy to run the process through to completion without user intervention. Once a short manual process is initiated, the entire script can run straight through. The CMD code that exists here does have a few prompts throughout the process, but they were easily removed to allow unattended operation.</p>
 
-<h3>Manual</h3>
-
+<h3 id="manual">Manual</h3>
 <ul>
-<li>Restore the conversion database from the current production database</li>
-<li>Run the <strong>createmors_sqlsharp.cmd</strong> to install the extension</li>
+  <li>Restore the conversion database from the current production database</li>
+  <li>Run the <strong>createmors_sqlsharp.cmd</strong> to install the extension</li>
 </ul>
 
-<h3>createmors.cmd</h3>
-
+<h3 id="createmorscmd">createmors.cmd</h3>
 <ul>
-<li>Ensure that the SQLSharp extension has been loaded</li>
-<li>Run <strong>createmors1.cmd</strong> to perform the basic creation/conversion
-<ul>
-<li>Run various data fixup procedures</li>
-<li>Create some basic views and new client tables</li>
-<li>Insert data into the tables</li>
-<li>Test the various tables for accuracy / completeness</li>
-<li>Start the invoice/payment (remittance) processing</li>
-</ul></li>
-<li>Run <strong>createmors2.cmd</strong> to incorporate the invoice/payment data from external spreadsheets and produce final statistics
-<ul>
-<li>Process the remittance data and update output tables with data acquired from this step</li>
-<li>Export data for missing information</li>
-<li>Print summary statistics &amp; error information</li>
-</ul></li>
+  <li>Ensure that the SQLSharp extension has been loaded</li>
+  <li>Run <strong>createmors1.cmd</strong> to perform the basic creation/conversion
+    <ul>
+      <li>Run various data fixup procedures</li>
+      <li>Create some basic views and new client tables</li>
+      <li>Insert data into the tables</li>
+      <li>Test the various tables for accuracy / completeness</li>
+      <li>Start the invoice/payment (remittance) processing</li>
+    </ul>
+  </li>
+  <li>Run <strong>createmors2.cmd</strong> to incorporate the invoice/payment data from external spreadsheets and produce final statistics
+    <ul>
+      <li>Process the remittance data and update output tables with data acquired from this step</li>
+      <li>Export data for missing information</li>
+      <li>Print summary statistics &amp; error information</li>
+    </ul>
+  </li>
 </ul>
 
-<h3>createmors_list.cmd</h3>
+<h3 id="createmorslistcmd">createmors_list.cmd</h3>
+<p>This is a convenience command to display the results, sans irrelevant output from MS SQL Server. This is a simple grep with options to exclude the constant “Changed database” and other “informational” messages from SQL Server that clutter up the output.</p>
 
-<p>This is a convenience command to display the results, sans irrelevant output from MS SQL Server. This is a simple grep with options to exclude the constant "Changed database" and other "informational" messages from SQL Server that clutter up the output.</p>
-
-<h2>Results</h2>
-
+<h2 id="results">Results</h2>
 <p>Output from the various steps was redirected to a variety of .out files, so that the intermediate results could be examined and changes made. 
 Numerous errors were tracked throughout the process and matched back to external information about the database contents. In the end,
 not all errors could be handled: aproximately 1.5% of the data could not be matched, due to poor data quality in the original database,
 and had to be handled through an external, manual process.</p>
 
-<h2>NOTE</h2>
-
-<p>The original process ran with all scripts in the project's root directory; however, the ruby and SQL scripts have been extracted into their own sub-directories for easier reviewing.</p>
+<h2 id="note">NOTE</h2>
+<p>The original process ran with all scripts in the project’s root directory; however, the ruby and SQL scripts have been extracted into their own sub-directories for easier reviewing.</p>
